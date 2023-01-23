@@ -12,22 +12,22 @@ jobs:
     steps:
     #- uses: actions/checkout@v2
     - name: create Directory
-      run: mkdir Downloads
+      run: mkdir downloads
       
       
     - name: Adding files
       run: |
-        cd Downloads
+        cd downloads
         echo 'A' > fileA.html
         echo 'B' > fileB.html
         echo 'C' > fileC.html
         cd ..
         
     - name: Uploading artifacts
-      uses: actions/upload-artifact@v3.1.2
+      uses: actions/upload-artifact@v2
       with:
         name: Sample-test
-        path: Download
+        path: download
       
       
       
