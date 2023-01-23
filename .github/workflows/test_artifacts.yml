@@ -1,37 +1,24 @@
-name: Build and Test
+name: Download and Save Artifact Example
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
-  build:
+  download-and-save-artifact:
     runs-on: ubuntu-latest
 
     steps:
-    #- uses: actions/checkout@v2
-    - name: create Directory
-      run: mkdir downloads
-      
-      
-    - name: Adding files
-      run: |
-        cd downloads
-        echo 'A' > fileA.html
-        echo 'B' > fileB.html
-        echo 'C' > fileC.html
-        cd ..
-        
-    - name: Uploading artifacts
-      uses: actions/upload-artifact@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Download artifact
+      uses: actions/download-artifact@v3.0.2
       with:
-        name: Sample-test
-        path: download
-      
-      
-      
-      
-      
-      
-     
+        name: my-artifact-name
+
+    - name: Create artifact directory
+      run: |
+        mkdir -p artifacts
+
+    - name: Save artifact to repository code
+      run: |
+        mv my-artifact-name/* artifacts/
