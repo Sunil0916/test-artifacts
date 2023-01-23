@@ -25,3 +25,11 @@ jobs:
       uses: actions/download-artifact@v3.0.2
       with:
         name: my-artifact-name
+    - name: Create artifact directory
+      run: |
+         mkdir -p my-artifact-directory
+         
+    - name: Save artifact to repository code
+      run: |
+        mv my-artifact-name/* my-artifact-directory/
+   
