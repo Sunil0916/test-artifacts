@@ -9,6 +9,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      
+    - name: creating .txt file
+      run: |
+        mkdir -p path/to/artifact
+        echo hello > path/to/artifact/world.txt
 
     - name: Download artifact
       uses: actions/download-artifact@v3.0.2
