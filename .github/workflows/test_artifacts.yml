@@ -1,23 +1,27 @@
-name: Download Artifact Example
+name: Download and Save Artifact Workflow
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  create-artifact:
+  build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Create artifact
+    - name: Build artifact
       run: |
         echo "Hello World" > artifact.txt
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3.0.2
       with:
         name: my-artifact-name
         path: artifact.txt
-  download-artifact:
+  download-and-save:
     runs-on: ubuntu-latest
+    needs: build
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -27,9 +31,7 @@ jobs:
         name: my-artifact-name
     - name: Create artifact directory
       run: |
-         mkdir -p my-artifact-directory
-         
+        mkdir -p artifacts
     - name: Save artifact to repository code
       run: |
-        mv my-artifact-name/* my-artifact-directory/
-   
+        mv my-artifact-name/* artifacts/
