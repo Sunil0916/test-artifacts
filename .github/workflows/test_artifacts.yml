@@ -35,3 +35,58 @@ jobs:
     - name: Save artifact to repository code
       run: |
         mv my-artifact-name/* artifacts/
+  test:
+    runs-on: ubuntu-latest
+   # needs: built
+    steps:
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v3
+        with:
+          # Specify connection via URL  (replaces server_address, server_port, secure,
+          # username and password )
+          #
+          # Format:
+          #
+          #  * smtp://user:password@server:port
+          #  * smtp+starttls://user:password@server:port
+          connection_url: ${{secrets.MAIL_CONNECTION}}
+          # Required mail server address if not connection_url:
+          server_address: smtp.gmail.com
+          # Server port, default 25:
+          server_port: 465
+          # Optional whether this connection use TLS (default is true if server_port is 465)
+          secure: true
+          # Optional (recommended) mail server username:
+          username: ${{secrets.MAIL_USERNAME}}
+          # Optional (recommended) mail server password:
+          password: ${{secrets.MAIL_PASSWORD}}
+          # Required mail subject:
+          subject: New Issue alert
+          # Required recipients' addresses:
+          to: sunil.eidiko916@gmail.com,srinivasa.kambham@eidiko.com
+          # Required sender full name (address can be skipped):
+          from:  S Sunil deep # <user@example.com>
+          # Optional plain body:
+          body: Build job of ${{github.repository}} completed successfully!
+                Please download the artifact with this link https://github.com/Sunil0916/Dependabot-Demo/actions/runs/${{ github.run_number }}
+          # Optional HTML body read from file:
+          #html_body: file://README.html
+          # Optional carbon copy recipients:
+          cc: karthikreddygayam.eidiko@gmail.com   #,leia@example.com
+          # Optional blind carbon copy recipients:
+          bcc: madhav.eidiko1@gmail.com   #,hansolo@example.com
+          # Optional recipient of the email response:
+          #reply_to: luke@example.com
+          # Optional Message ID this message is replying to:
+          #in_reply_to: <random-luke@example.com>
+          # Optional unsigned/invalid certificates allowance:
+          #ignore_cert: true
+          # Optional converting Markdown to HTML (set content_type to text/html too):
+          convert_markdown: true
+          # Optional attachments:
+          attachments: ${{ github.workspace }}/my-artifact  #,git.diff,./dist/static/*.js
+          # Optional priority: 'high', 'normal' (default) or 'low'
+          #priority: low
+
+
+
